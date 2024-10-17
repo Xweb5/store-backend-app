@@ -10,7 +10,6 @@ The project is based in java as base technological stack. Other technologies ass
 ## Table of contents (optional)
 
 - Requirements
-- Recommended modules
 - Execution
 - DB access 
 - Missing development part
@@ -26,7 +25,8 @@ This module requires the following modules:
 
 ## Execution
 
-please run : **mvn spring-boot:run**
+- please run : **mvn spring-boot:run**
+- access to http://localhost:8080/bookshop/v1
 
 ## DB Acess
 
