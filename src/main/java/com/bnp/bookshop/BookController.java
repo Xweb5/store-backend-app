@@ -6,8 +6,6 @@ import java.util.List;
 import com.bnp.bookshop.dto.BookDto;
 import com.bnp.bookshop.entity.*;
 import com.bnp.bookshop.mapper.BookMapper;
-//import org.springframework.security.core.context.SecurityContextHolder;
-//import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;

@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -27,11 +28,11 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(request -> request
-                        .requestMatchers(HttpMethod.OPTIONS).permitAll()
+                .authorizeHttpRequests(request -> {
+                    request.requestMatchers(HttpMethod.OPTIONS).permitAll();
+                }
+
                 )
-                //.authorizeHttpRequests(auth -> auth .requestMatchers(PathRequest.toH2Console()).permitAll())
-                //.csrf(csrf -> csrf.ignoringRequestMatchers(PathRequest.toH2Console()))
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((auth) -> auth
                         .anyRequest().authenticated()
