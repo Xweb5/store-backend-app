@@ -1,4 +1,4 @@
-package com.bnp.bookshop;
+package com.bnp.bookshop.exception;
 
 public class BookNotFoundException extends RuntimeException {
 

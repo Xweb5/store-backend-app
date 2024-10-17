@@ -1,9 +1,9 @@
-package com.bnp.bookshop;
+package com.bnp.bookshop.controllers;
 
 import org.springframework.web.bind.annotation.*;
 
 @RestController()
-@RequestMapping("/bookshop/v1/users")
+@RequestMapping("/users")
 public class UserController {
 
   @CrossOrigin()

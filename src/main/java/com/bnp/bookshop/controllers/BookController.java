@@ -1,4 +1,4 @@
-package com.bnp.bookshop;
+package com.bnp.bookshop.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,27 +6,30 @@ import java.util.List;
 import com.bnp.bookshop.dto.BookDto;
 import com.bnp.bookshop.entity.*;
 import com.bnp.bookshop.mapper.BookMapper;
+import com.bnp.bookshop.services.BooksService;
+import com.bnp.bookshop.services.UserBookService;
+import com.bnp.bookshop.services.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController()
-@RequestMapping("/bookshop/v1/books")
+@RequestMapping("/books")
 public class BookController {
 
   private final BookMapper bookMapper;
-  private final BookRepository repository;
-  private final UserBookRepository userBookRepository;
-  private final UsersRepository usersRepository;
+  private final BooksService booksService;
+  private final UserBookService userBookService;
+  private final UserService userService;
 
-  BookController(BookRepository repository,
-                 UsersRepository userBookRepository,
+  BookController(BooksService booksService,
+                 UserService userService,
                  BookMapper bookMapper,
-                 UserBookRepository userBookRepository1) {
-    this.repository = repository;
+                 UserBookService userBookService) {
+    this.booksService = booksService;
     this.bookMapper = bookMapper;
-    this.usersRepository = userBookRepository;
-    this.userBookRepository = userBookRepository1;
+    this.userService = userService;
+    this.userBookService = userBookService;
   }
 
   @CrossOrigin()
@@ -36,7 +39,7 @@ public class BookController {
     Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     String username = ((UserDetails)principal).getUsername();
 
-    List<Book> books = repository.findAll();
+    List<Book> books = booksService.findAll();
     return bookMapper.toDtoList(books);
   }
 
@@ -50,12 +53,12 @@ public class BookController {
     List<UserBook> listToPersist = new ArrayList<>();
     bookList.forEach(bookDto -> {
       UserBook userBook = new UserBook();
-      userBook.setBook(repository.findById(bookDto.getId()).get());
-      userBook.setUser(usersRepository.findByUsername(username));
+      userBook.setBook(booksService.findById(bookDto.getId()).get());
+      userBook.setUser(userService.findByUsername(username));
       userBook.setItems(bookDto.getItems());
       listToPersist.add(userBook);
     });
-    return userBookRepository.saveAll(listToPersist);
+    return userBookService.saveAll(listToPersist);
   }
 
 
