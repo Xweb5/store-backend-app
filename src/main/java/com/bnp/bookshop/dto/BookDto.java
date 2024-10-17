@@ -19,5 +19,7 @@ public class BookDto {
   private String author;
   private Double price;
 
+  private Integer items;
+
 
 }
